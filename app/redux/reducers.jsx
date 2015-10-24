@@ -33,9 +33,21 @@ function notes(state = [], action) {
   }
 }
 
+function lanes(state = [], action) {
+  switch (action.type) {
+    case ADD_NOTE:
+      return [...state, {
+        id: uuid.v4(),
+        notes: action.notes
+      }];
+    default:
+      return state;
+  }
+}
 
 const kanbanApp = combineReducers({
-  notes
+  notes,
+  lanes
 });
 
-export default kanbanApp;
+export default kanbanApp

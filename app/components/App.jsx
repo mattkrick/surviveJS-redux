@@ -1,6 +1,6 @@
 import uuid from 'node-uuid';
 import React, {Component, PropTypes} from 'react';
-import Notes from './Notes.jsx';
+import Lanes from './Lanes.jsx';
 import { connect } from 'react-redux';
 import {addNote, updateNote, deleteNote, editNote} from '../redux/actions';
 
@@ -12,10 +12,7 @@ class App extends Component {
         <button className="add-note"
                 onClick={() => dispatch(addNote())}>+
         </button>
-        <Notes notes={notes}
-               onUpdate={(id,task) => dispatch(updateNote(id,task))}
-               onDelete={id => dispatch(deleteNote(id))}
-               onEdit={id => dispatch(editNote(id))}/>
+        <Lanes/>
       </div>
 
     );

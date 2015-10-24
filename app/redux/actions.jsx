@@ -6,7 +6,7 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const IS_EDITING = 'IS_EDITING';
-
+export const ADD_LANE = 'ADD_LANE';
 
 /*
  * action creators
@@ -49,4 +49,8 @@ export function editNote(id) {
 
 function findNote(id, notes) {
   return notes.findIndex((note) => note.id === id);
+}
+
+export function addLane(notes = []) {
+  return {type: ADD_LANE, notes};
 }
