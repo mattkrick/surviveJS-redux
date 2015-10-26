@@ -1,25 +1,23 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
-import { devTools, persistState } from 'redux-devtools';
-import {addNote} from './actions';
+import {addNote, addLane} from './actionCreators';
 import localState from 'redux-localstorage'
+import DevTools from './DevTools';
 
+const finalCreateStore = compose(
+  applyMiddleware(thunk),
+  //localState(),
+  DevTools.instrument()
+)(createStore);
 export default function configureStore() {
-  const finalCreateStore = compose(
-    applyMiddleware(thunk),
-    // Provides support for DevTools:
-    devTools(),
-    localState(),
-    // Lets you write ?debug_session=<name> in address bar to persist debug sessions
-    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-  )(createStore);
-
   const store = finalCreateStore(reducer);
-  if (store.getState().notes.length === 0) {
-    store.dispatch(addNote('Learn Webpack'));
-    store.dispatch(addNote('Learn React'));
-    store.dispatch(addNote('Do laundry'));
+  if (store.getState().lanes.length === 0) {
+    store.dispatch(addLane());
+    const laneId = store.getState().lanes[0].id;
+    store.dispatch(addNote(laneId,'Learn Webpack'));
+    store.dispatch(addNote(laneId,'Learn React'));
+    store.dispatch(addNote(laneId,'Do laundry'));
   }
 
   if (module.hot) {
@@ -29,6 +27,5 @@ export default function configureStore() {
       store.replaceReducer(nextReducer);
     });
   }
-
   return store;
 }

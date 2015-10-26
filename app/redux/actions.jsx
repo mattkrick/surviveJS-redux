@@ -5,52 +5,11 @@
 export const ADD_NOTE = 'ADD_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
-export const IS_EDITING = 'IS_EDITING';
+export const IS_EDITING_NOTE = 'IS_EDITING_NOTE';
+
 export const ADD_LANE = 'ADD_LANE';
+export const UPDATE_LANE = 'UPDATE_LANE';
+export const DELETE_LANE = 'DELETE_LANE';
+export const IS_EDITING_LANE = 'IS_EDITING_LANE';
 
-/*
- * action creators
- */
-
-export function addNote(task = 'New item') {
-  return {type: ADD_NOTE, task};
-}
-
-export function updateNote(id, task) {
-  return (dispatch, getState) => {
-    const { notes } = getState();
-    let index = findNote(id, notes);
-    if (index >= 0) {
-      dispatch({type: UPDATE_NOTE, index, task});
-    }
-  };
-}
-
-export function deleteNote(id) {
-  return (dispatch, getState) => {
-    const { notes } = getState();
-    let index = findNote(id, notes);
-    if (index >= 0) {
-      dispatch({type: DELETE_NOTE, index});
-    }
-  };
-}
-
-export function editNote(id) {
-  return (dispatch, getState) => {
-    const { notes } = getState();
-    let index = findNote(id, notes);
-    if (index >= 0) {
-      let isEditing = !notes[index].isEditing;
-      dispatch({type: IS_EDITING, index, isEditing});
-    }
-  };
-}
-
-function findNote(id, notes) {
-  return notes.findIndex((note) => note.id === id);
-}
-
-export function addLane(notes = []) {
-  return {type: ADD_LANE, notes};
-}
+export const MOVE_NOTE = 'MOVE_NOTE';

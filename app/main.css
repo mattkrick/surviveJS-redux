@@ -1,7 +1,49 @@
 body {
   background: cornsilk;
+
   font-family: sans-serif;
 }
+
+.lane {
+  display: inline-block;
+
+  margin: 1em;
+
+  background-color: #efefef;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+
+  min-width: 10em;
+  vertical-align: top;
+}
+
+.lane-header {
+  overflow: auto;
+
+  padding: 1em;
+
+  color: #efefef;
+  background-color: #333;
+
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.lane-name {
+  float: left;
+}
+
+.lane-add-note {
+  float: right;
+
+  margin-left: 0.5em;
+}
+
+.add-lane, .lane-add-note button {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+}
+
 .add-note {
   background-color: #fdfdfd;
   border: 1px solid #ccc;
@@ -10,11 +52,11 @@ body {
 .notes {
   margin: 0.5em;
   padding-left: 0;
-
+  min-height: 1em;
   max-width: 10em;
   list-style: none;
 }
-note {
+.note {
   margin-bottom: 0.5em;
   padding: 0.5em;
 
@@ -27,7 +69,7 @@ note {
   transition: 0.6s;
 }
 
-.note .task {
+.note .text {
   /* force to use inline-block so that it gets minimum height */
   display: inline-block;
 }

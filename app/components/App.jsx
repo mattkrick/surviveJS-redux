@@ -1,36 +1,42 @@
-import uuid from 'node-uuid';
 import React, {Component, PropTypes} from 'react';
-import Lanes from './Lanes.jsx';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {addNote, updateNote, deleteNote, editNote} from '../redux/actions';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import * as actionCreators from '../redux/actionCreators';
+import Lanes from './Lanes.jsx';
 
-class App extends Component {
+@DragDropContext(HTML5Backend)
+@connect(mapStateToProps, mapDispatchToProps)
+export default class App extends Component {
+  static propTypes: {
+    actions: PropTypes.object.isRequired,
+    notes: PropTypes.array.isRequired,
+    lanes: PropTypes.array.isRequired
+  };
+
   render() {
-    const { dispatch, notes } = this.props;
     return (
       <div>
-        <button className="add-note"
-                onClick={() => dispatch(addNote())}>+
+        <button className="add-lane"
+                onClick={this.props.actions.addLane}>+
         </button>
-        <Lanes/>
+        <Lanes {...this.props}/>
       </div>
 
     );
   }
 }
 
-App.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.shape(
-    {
-      id: PropTypes.string.isRequired,
-      task: PropTypes.string.isRequired
-    }
-  ))
-};
-
-function select(state) {
+function mapStateToProps(state) {
   return {
-    notes: state.notes
-  }
+    notes: state.notes,
+    lanes: state.lanes
+  };
 }
-export default connect(select)(App);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actionCreators, dispatch)
+  };
+}
